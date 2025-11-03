@@ -1,0 +1,13 @@
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/bin/Debug/net8.0/AcademyApp.Core.deps.json
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/bin/Debug/net8.0/AcademyApp.Core.dll
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/bin/Debug/net8.0/AcademyApp.Core.pdb
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.AssemblyInfoInputs.cache
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.AssemblyInfo.cs
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.csproj.CoreCompileInputs.cache
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.sourcelink.json
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.dll
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/refint/AcademyApp.Core.dll
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.pdb
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/ref/AcademyApp.Core.dll
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.Core/obj/Debug/net8.0/AcademyApp.Core.csproj.AssemblyReference.cache
