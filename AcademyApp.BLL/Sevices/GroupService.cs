@@ -1,3 +1,4 @@
+using AcademyApp.BLL.Dtos;
 using AcademyApp.BLL.Interfaces;
 using AcademyApp.Core.Models;
 using AcademyApp.DLL.Data;
@@ -14,25 +15,25 @@ public class GroupService : IGroupService
         _academyDbContext = academyDbContext;
     }
 
-    public void AddGroup(Group group)
+    public void AddGroup(GroupCreateDto groupCreateDto)
     {
-        if (!_academyDbContext.Groups.Any(g => g.Name.ToLower() == group.Name.ToLower()))
+        if (!_academyDbContext.Groups.Any(g => g.Name.ToLower() == groupCreateDto.Name.ToLower()))
         {
             throw new Exception("Group with the same name already exists.");
             
         }
-        _academyDbContext.Add(group);
+        _academyDbContext.Add(MapProfile.GroupCreateDtoToGroup(groupCreateDto));
         _academyDbContext.SaveChanges();
     }
     
-    public async Task AddGroupAsync(Group group)
+    public async Task AddGroupAsync(GroupCreateDto groupCreateDto)
     {
-        if (await _academyDbContext.Groups.AnyAsync(g => g.Name.ToLower() == group.Name.ToLower()))
+        if (await _academyDbContext.Groups.AnyAsync(g => g.Name.ToLower() == groupCreateDto.Name.ToLower()))
         {
             throw new Exception("Group with the same name already exists.");
             
         }
-        await _academyDbContext.AddAsync(group);
+        await _academyDbContext.AddAsync(MapProfile.GroupCreateDtoToGroup(groupCreateDto));
         await _academyDbContext.SaveChangesAsync();
     }
     
@@ -42,24 +43,27 @@ public class GroupService : IGroupService
     public async Task<List<Group>> GetAllGroupsAsync() =>
         await _academyDbContext.Groups.ToListAsync();
     
-    public Group GetGroupById(int id)
+    public GroupReturnDto GetGroupById(int id)
     {
         var group = _academyDbContext.Groups.Find(id);
         if (group is null)
         {
             throw new Exception("Group not found.");
         }
-        return group;
+
+       
+        return MapProfile.GroupToGroupReturnDto(group);
     }
     
-    public async Task<Group> GetGroupByIdAsync(int id)
+    public async Task<GroupReturnDto> GetGroupByIdAsync(int id)
     {
         var group =  await _academyDbContext.Groups.FindAsync(id);
         if (group is null)
         {
             throw new Exception("Group not found.");
         }
-        return group;
+      
+        return MapProfile.GroupToGroupReturnDto(group);
     }
     
     public List<Group> GetGroupsByName(string name) =>

@@ -1,15 +1,16 @@
+using AcademyApp.BLL.Dtos;
 using AcademyApp.Core.Models;
 
 namespace AcademyApp.BLL.Interfaces;
 
 public interface IGroupService
 {
-    void AddGroup(Group group);
-    Task AddGroupAsync(Group group);
+    void AddGroup(GroupCreateDto group);
+    Task AddGroupAsync(GroupCreateDto group);
     List<Group> GetAllGroups();
     Task<List<Group>> GetAllGroupsAsync();
-    Group GetGroupById(int id);
-    Task<Group> GetGroupByIdAsync(int id);
+    GroupReturnDto GetGroupById(int id);
+    Task<GroupReturnDto> GetGroupByIdAsync(int id);
     List<Group> GetGroupsByName(string name);
     Task<List<Group>> GetGroupsByNameAsync(string name);
     List<Group> GetGroupsByLimit(int limit);

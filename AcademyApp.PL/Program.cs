@@ -10,5 +10,7 @@ serviceCollection.AddScoped<AcademyDbContext>();
 serviceCollection.AddScoped<IGroupService, GroupService>();
 var serviceProvider = serviceCollection.BuildServiceProvider();
 var groupService = serviceProvider.GetRequiredService<IGroupService>();
-foreach (var group in groupService.GetAllGroups())
-    Console.WriteLine(group);
+// foreach (var group in groupService.GetAllGroups())
+//     Console.WriteLine(group);
+var result = await groupService.GetGroupByIdAsync(2);
+Console.WriteLine(result);
