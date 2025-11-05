@@ -68,3 +68,4 @@
 /Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.PL/obj/Debug/net8.0/AcademyApp.PL.pdb
 /Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.PL/obj/Debug/net8.0/AcademyApp.PL.genruntimeconfig.cache
 /Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.PL/obj/Debug/net8.0/ref/AcademyApp.PL.dll
+/Users/asmrofficialfinder/Documents/CodeAcademyTest/AcademyApp/AcademyApp.PL/bin/Debug/net8.0/AutoMapper.dll

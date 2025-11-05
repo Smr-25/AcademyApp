@@ -1,51 +1,52 @@
 using AcademyApp.BLL.Dtos;
 using AcademyApp.BLL.Interfaces;
+using AcademyApp.BLL.Profiles;
 using AcademyApp.Core.Models;
 using AcademyApp.DLL.Data;
+using AcademyApp.DLL.Repostories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyApp.BLL.Sevices;
 
 public class GroupService : IGroupService
 {
-    private readonly AcademyDbContext _academyDbContext;
-    
-    public GroupService(AcademyDbContext academyDbContext)
+    private readonly IRepository<Group> _repo;
+    public GroupService(IRepository<Group> repo)
     {
-        _academyDbContext = academyDbContext;
+        _repo = repo;
     }
 
     public void AddGroup(GroupCreateDto groupCreateDto)
     {
-        if (!_academyDbContext.Groups.Any(g => g.Name.ToLower() == groupCreateDto.Name.ToLower()))
+        if (_repo.IsExists(g => g.Name.ToLower() == groupCreateDto.Name.ToLower()))
         {
             throw new Exception("Group with the same name already exists.");
             
         }
-        _academyDbContext.Add(MapProfile.GroupCreateDtoToGroup(groupCreateDto));
-        _academyDbContext.SaveChanges();
+        _repo.Add(MapProfile.GroupCreateDtoToGroup(groupCreateDto));
+        _repo.SaveChanges();
     }
     
     public async Task AddGroupAsync(GroupCreateDto groupCreateDto)
     {
-        if (await _academyDbContext.Groups.AnyAsync(g => g.Name.ToLower() == groupCreateDto.Name.ToLower()))
+        if (await _repo.IsExistsAsync(g => g.Name.ToLower() == groupCreateDto.Name.ToLower()))
         {
             throw new Exception("Group with the same name already exists.");
             
         }
-        await _academyDbContext.AddAsync(MapProfile.GroupCreateDtoToGroup(groupCreateDto));
-        await _academyDbContext.SaveChangesAsync();
+        await _repo.AddAsync(MapProfile.GroupCreateDtoToGroup(groupCreateDto));
+        await _repo.SaveChangesAsync();
     }
     
     public List<Group> GetAllGroups() =>
-         _academyDbContext.Groups.ToList();
+         _repo.GetAll().ToList();
     
     public async Task<List<Group>> GetAllGroupsAsync() =>
-        await _academyDbContext.Groups.ToListAsync();
+        await _repo.GetAll().ToListAsync();
     
     public GroupReturnDto GetGroupById(int id)
     {
-        var group = _academyDbContext.Groups.Find(id);
+        var group = _repo.Get(id);
         if (group is null)
         {
             throw new Exception("Group not found.");
@@ -57,7 +58,7 @@ public class GroupService : IGroupService
     
     public async Task<GroupReturnDto> GetGroupByIdAsync(int id)
     {
-        var group =  await _academyDbContext.Groups.FindAsync(id);
+        var group =  await _repo.GetAsync(id);
         if (group is null)
         {
             throw new Exception("Group not found.");
@@ -67,67 +68,66 @@ public class GroupService : IGroupService
     }
     
     public List<Group> GetGroupsByName(string name) =>
-        _academyDbContext.Groups
-            .Where(g => g.Name.ToLower().Contains(name.ToLower()) || g.Description.ToLower().Contains(name.ToLower()))
+        _repo
+            .GetAll(g => g.Name.ToLower().Contains(name.ToLower()) || g.Description.ToLower().Contains(name.ToLower()))
             .ToList();
     
     public async Task<List<Group>> GetGroupsByNameAsync(string name) =>
-        await _academyDbContext.Groups
-            .Where(g => g.Name.ToLower().Contains(name.ToLower()) || g.Description.ToLower().Contains(name.ToLower()))
+        await _repo.GetAll(g => g.Name.ToLower().Contains(name.ToLower()) || g.Description.ToLower().Contains(name.ToLower()))
             .ToListAsync();
     
     public List<Group> GetGroupsByLimit(int limit) =>
-        _academyDbContext.Groups
-            .Where(g => g.Limit == limit)
+        _repo.GetAll(g => g.Limit == limit)
             .ToList();
     
     public async Task<List<Group>> GetGroupsByLimitAsync(int limit) =>
-        await _academyDbContext.Groups
-            .Where(g => g.Limit == limit)
+        await _repo.GetAll(g => g.Limit == limit)
             .ToListAsync(); 
     
     public List<Group> GetGroupsByLimit(int minLimit,int maxLimit) =>
-        _academyDbContext.Groups
-            .Where(g => g.Limit >= minLimit && g.Limit <= maxLimit)
+        _repo.GetAll(g => g.Limit >= minLimit && g.Limit <= maxLimit)
             .ToList();
         
     public async Task<List<Group>> GetGroupsByLimitAsync(int minLimit,int maxLimit) =>
-        await _academyDbContext.Groups
-            .Where(g => g.Limit >= minLimit && g.Limit <= maxLimit)
+        await _repo
+            .GetAll(g => g.Limit >= minLimit && g.Limit <= maxLimit)
             .ToListAsync();
     
     public void UpdateGroup(Group group)
     {
-        var existingGroup = _academyDbContext.Groups.Find(group.Id);
+        var existingGroup = _repo.Get(group.Id);
         if (existingGroup is null)
         {
             throw new Exception("Group not found.");
         }
-        if(_academyDbContext.Groups.Any(g => g.Name.ToLower() == group.Name.ToLower() && g.Id != group.Id))
+        if(_repo.IsExists(g => g.Name.ToLower() == group.Name.ToLower() && g.Id != group.Id))
         {
             throw new Exception("Group with the same name already exists.");
         }
         existingGroup.Name = group.Name;
         existingGroup.Description = group.Description;
         existingGroup.Limit = group.Limit;
-        _academyDbContext.SaveChanges();
+        _repo.SaveChanges();
     }
     
     public async Task UpdateGroupAsync(Group group)
     {
-        var existingGroup = await _academyDbContext.Groups.FindAsync(group.Id);
+        var existingGroup = await _repo.GetAsync(group.Id);
         if (existingGroup is null)
         {
             throw new Exception("Group not found.");
         }
-        if(await _academyDbContext.Groups.AnyAsync(g => g.Name.ToLower() == group.Name.ToLower() && g.Id != group.Id))
+        if(await _repo.IsExistsAsync(g => g.Name.ToLower() == group.Name.ToLower() && g.Id != group.Id))
         {
             throw new Exception("Group with the same name already exists.");
         }
         existingGroup.Name = group.Name;
         existingGroup.Description = group.Description;
         existingGroup.Limit = group.Limit;
-        await  _academyDbContext.SaveChangesAsync();
+        await  _repo.SaveChangesAsync();
     }
+    
+    public List<Group> GetAllGroups(bool isTracking, int page, int take, params string[] includes)
+    => _repo.GetAll(isTracking, page, take, includes).ToList();
 }
 

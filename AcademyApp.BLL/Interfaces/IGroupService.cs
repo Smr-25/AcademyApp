@@ -21,4 +21,6 @@ public interface IGroupService
     void UpdateGroup(Group group);
     
     Task UpdateGroupAsync(Group group);
+    
+    List<Group> GetAllGroups(bool isTracking, int page, int take, params string[] includes);
 }

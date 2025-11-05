@@ -1,18 +1,24 @@
 using AcademyApp.Core.Models;
+using AcademyApp.BLL.Dtos;
 
 namespace AcademyApp.BLL.Interfaces;
 
 public interface IStudentService
 {
-    void AddStudent(Student student);
+    void AddStudent(StudentCreateDto dto);
+    Task AddStudentAsync(StudentCreateDto dto);
+    
     List<Student> GetAllStudents();
-    Student GetStudentById(int id);
-    void UpdateStudent(Student student);
-    void DeleteStudent(int id);
-
-    Task AddStudentAsync(Student student);
     Task<List<Student>> GetAllStudentsAsync();
-    Task<Student> GetStudentByIdAsync(int id);
-    Task UpdateStudentAsync(Student student);
+    
+    StudentReturnDto GetStudentById(int id);
+    Task<StudentReturnDto> GetStudentByIdAsync(int id);
+    
+    void UpdateStudent(StudentUpdateDto dto);
+    Task UpdateStudentAsync(StudentUpdateDto dto);
+    
+    void DeleteStudent(int id);
     Task DeleteStudentAsync(int id);
+    
+    
 }
